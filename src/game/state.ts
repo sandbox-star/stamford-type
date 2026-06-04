@@ -10,15 +10,15 @@ import {
   positionOf,
   simulateOtherFixtures,
 } from '../data/league'
-import { playerById } from '../data/players'
+import { STARTING_SQUAD_IDS, playerById } from '../data/players'
 
-const KEY = 'stamford-type-save-v2'
+const KEY = 'stamford-type-save-v3'
 
 export const INITIAL_STATE: GameState = {
-  version: 2,
+  version: 3,
   managerName: 'Boss',
-  budget: 25, // starting transfer kitty (£m)
-  squad: [],
+  budget: 25, // starting transfer kitty (£m) — for upgrades
+  squad: [...STARTING_SQUAD_IDS],
   matchday: 1,
   points: 0,
   played: 0,
@@ -32,7 +32,7 @@ export const INITIAL_STATE: GameState = {
   completedPassages: [],
   standings: initialStandings(),
   news: [
-    { md: 1, tone: 'info', text: 'Welcome to Stamford Type FC. The board want promotion-winning accuracy — type clean, proofread harder, and climb the league.' },
+    { md: 1, tone: 'info', text: 'You inherit the full Stamford Type FC squad. The board want the title — type clean, proofread harder, and bank the budget to sign a galáctico.' },
   ],
 }
 
