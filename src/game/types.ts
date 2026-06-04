@@ -50,6 +50,32 @@ export interface Passage {
   text: string
 }
 
+export interface Team {
+  id: string
+  name: string
+  short: string             // 3-letter code
+  nickname: string
+  primary: string           // crest colour
+  secondary: string
+  strength: number          // 50..90, used to simulate the rest of the league
+}
+
+export interface TeamRecord {
+  p: number
+  w: number
+  d: number
+  l: number
+  gf: number
+  ga: number
+  form: string[]            // recent results, newest last: 'W' | 'D' | 'L'
+}
+
+export interface NewsItem {
+  md: number
+  tone: 'result' | 'transfer' | 'info'
+  text: string
+}
+
 export interface GameState {
   version: number
   managerName: string
@@ -66,4 +92,6 @@ export interface GameState {
   weakWords: Record<string, number>   // lowercased word -> times missed
   bestAccuracy: number
   completedPassages: string[]
+  standings: Record<string, TeamRecord>  // keyed by team id (incl. player's club)
+  news: NewsItem[]
 }

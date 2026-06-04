@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { MatchOutcome, Passage } from '../game/types'
+import type { MatchOutcome, Passage, Team } from '../game/types'
 import { score } from '../game/scoring'
 import { computeOutcome } from '../game/outcome'
 import { Button, Panel, Tag } from './ui'
+import { TeamCrest } from './TeamCrest'
 
 export interface ResultMeta {
   wpm: number
   seconds: number
   passage: Passage
   finalText: string
+  opponent: Team
 }
 
 const noAutocorrect = {
@@ -26,10 +28,12 @@ function fmtTime(s: number) {
 
 export default function Match({
   passage,
+  opponent,
   onComplete,
   onQuit,
 }: {
   passage: Passage
+  opponent: Team
   onComplete: (outcome: MatchOutcome, meta: ResultMeta) => void
   onQuit: () => void
 }) {
@@ -75,21 +79,24 @@ export default function Match({
     const outcome = computeOutcome(finalReport, errorsAfterTypingRef.current)
     const minutes = Math.max(typingSeconds / 60, 1 / 60)
     const wpm = Math.round(typedWords / minutes)
-    onComplete(outcome, { wpm, seconds: typingSeconds, passage, finalText: draft })
+    onComplete(outcome, { wpm, seconds: typingSeconds, passage, finalText: draft, opponent })
   }
 
   return (
     <div className="relative z-10 mx-auto w-full max-w-4xl px-5 py-8 animate-rise">
-      <div className="mb-5 flex items-center justify-between">
+      <div className="mb-5 flex items-center justify-between gap-3">
         <button onClick={onQuit} className="text-sm text-white/50 hover:text-white/80 transition">
-          ← Abandon match
+          ← Abandon
         </button>
-        <div className="flex items-center gap-3">
-          <Tag tone="muted">{passage.topic}</Tag>
-          <Tag tone={phase === 'type' ? 'blue' : 'gold'}>
-            {phase === 'type' ? 'Match in play' : 'Proofreading'}
-          </Tag>
+        <div className="flex items-center gap-2 font-condensed text-sm font-bold uppercase tracking-wide text-white/70">
+          <span className="text-cream">Stamford</span>
+          <span className="text-white/30">vs</span>
+          <TeamCrest team={opponent} size={20} />
+          <span className="text-cream">{opponent.short}</span>
         </div>
+        <Tag tone={phase === 'type' ? 'blue' : 'gold'}>
+          {phase === 'type' ? '● Live' : 'Proofreading'}
+        </Tag>
       </div>
 
       {phase === 'type' ? (
