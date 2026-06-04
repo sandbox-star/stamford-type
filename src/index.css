@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  --color-pitch: #06131f;
+  --color-pitch-2: #0a1c2e;
+  --color-navy: #041d3d;
+  --color-blue: #034694;
+  --color-blue-bright: #1d6fe0;
+  --color-blue-glow: #3a8dff;
+  --color-gold: #d9b46a;
+  --color-gold-bright: #f1d28a;
+  --color-cream: #f4f1e8;
+  --color-good: #34d399;
+  --color-bad: #f87171;
+  --color-warn: #fbbf24;
+
+  --font-display: "Archivo", system-ui, sans-serif;
+  --font-serif: "Newsreader", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 700px at 50% -10%, #0c2a44 0%, transparent 60%),
+    radial-gradient(900px 500px at 90% 10%, rgba(3,70,148,0.18) 0%, transparent 55%),
+    linear-gradient(180deg, #06131f 0%, #04101b 100%);
+  background-color: #04101b;
+  color: var(--color-cream);
+  font-family: var(--font-display);
+}
+
+/* faint pitch lines texture overlay */
+#root::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 48px 48px;
+  z-index: 0;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pop {
+  0% { transform: scale(0.94); opacity: 0; }
+  60% { transform: scale(1.02); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes glow {
+  0%,100% { box-shadow: 0 0 0 1px rgba(58,141,255,0.25), 0 0 28px rgba(29,111,224,0.25); }
+  50% { box-shadow: 0 0 0 1px rgba(58,141,255,0.5), 0 0 44px rgba(29,111,224,0.45); }
+}
+.animate-rise { animation: rise 0.5s cubic-bezier(0.2,0.7,0.2,1) both; }
+.animate-pop { animation: pop 0.4s cubic-bezier(0.2,0.7,0.2,1) both; }
+.animate-glow { animation: glow 2.4s ease-in-out infinite; }
+
+::selection { background: rgba(29,111,224,0.4); }
+
+textarea, input { font-family: var(--font-mono); }
+
+.no-autocorrect {
+  /* belt and braces: disable native spelling crutches */
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 99px; }
+::-webkit-scrollbar-track { background: transparent; }

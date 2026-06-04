@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/hub.tsx","./src/components/match.tsx","./src/components/results.tsx","./src/components/transfers.tsx","./src/components/ui.tsx","./src/data/passages.ts","./src/data/players.ts","./src/game/outcome.ts","./src/game/scoring.ts","./src/game/state.ts","./src/game/types.ts"],"version":"5.9.3"}
